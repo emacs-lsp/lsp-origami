@@ -116,7 +116,7 @@
   (interactive)
   (if (lsp--capability "foldingRangeProvider")
       (setq-local origami-parser-alist `((,major-mode . lsp-origami--parser)))
-    (message "Language Server doesn't support \"foldingRangeProvider\", not enabling origami support.")))
+    (lsp-warn "Language Server doesn't support \"foldingRangeProvider\", not enabling origami support.")))
 
 (provide 'lsp-origami)
 ;;; lsp-origami.el ends here
