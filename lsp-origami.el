@@ -4,8 +4,9 @@
 
 ;; Author: Vibhav Pant
 ;; Keywords: languages lsp-mode
-;; Package-Requires: ((origami "1.0") (lsp-mode "6.0") (dash "2.14".1) (dash-functional "2.14.1") (ht "2.0"))
+;; Package-Requires: ((origami "1.0") (lsp-mode "6.0") (dash "2.14.1") (dash-functional "2.14.1") (ht "2.0"))
 ;; Version: 1.0
+;; URL: https://github.com/emacs-lsp/lsp-origami
 
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -20,10 +21,10 @@
 ;; You should have received a copy of the GNU General Public License
 ;; along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-;;; Commentary
+;;; Commentary:
 
 ;; lsp-origami provides support for origami.el using language server
-;; procotol's "textDocument/foldingRange" functionality. It can be enabled
+;; protocol's "textDocument/foldingRange" functionality. It can be enabled
 ;; with
 ;; (require 'lsp-origami)
 ;; (add-hook 'origami-mode-hook #'lsp-origami-enable)
@@ -36,13 +37,13 @@
 (require 'dash-functional)
 (require 'ht)
 
-(cl-defstruct lsp--origami-nested-node
+(cl-defstruct lsp-origami--nested-node
   (beg)
   (end)
   (children))
 
-(defun lsp--origami-make-node-from-range (range)
-  (make-lsp--origami-nested-node
+(defun lsp-origami--make-node-from-range (range)
+  (make-lsp-origami--nested-node
    :beg (car range)
    :end (cdr range)
    :children nil))
@@ -54,24 +55,24 @@
       (cl-block top
 	(dolist (node nodes)
 	  ;; Check whether the range is within the bounds of the node.
-	  (if (and (> beg (lsp--origami-nested-node-beg node))
-		   (< end (lsp--origami-nested-node-end node)))
+	  (if (and (> beg (lsp-origami--nested-node-beg node))
+		   (< end (lsp-origami--nested-node-end node)))
 	      ;; Check whether the range nests in a child node.
-	      (if (->> node lsp--origami-nested-node-children
+	      (if (->> node lsp-origami--nested-node-children
 		       (lsp-origami--insert-range range))
 		  (cl-return-from top t)
 		;; If not, insert this node as a child.
-		(setf (lsp--origami-nested-node-children node)
-		      (list (make-lsp--origami-nested-node
+		(setf (lsp-origami--nested-node-children node)
+		      (list (make-lsp-origami--nested-node
 			     :beg beg
 			     :end end
 			     :children nil)))
 		(cl-return-from top t))
-	    (if (or (= beg (lsp--origami-nested-node-beg node))
-		    (= end (lsp--origami-nested-node-end node)))
+	    (if (or (= beg (lsp-origami--nested-node-beg node))
+		    (= end (lsp-origami--nested-node-end node)))
 		(cl-return-from top t))))
 	;; If not, insert this as a "root" node.
-	(nconc nodes (list (make-lsp--origami-nested-node
+	(nconc nodes (list (make-lsp-origami--nested-node
 			    :beg beg
 			    :end end
 			    :children nil)))
@@ -87,15 +88,15 @@
  	  (lsp--position-to-point (ht ("line" end-line)
 				      ("character" end-character))))))
 
-(defun lsp--origami-node-to-fold (node create)
+(defun lsp-origami--node-to-fold (node create)
   (funcall create
-	   (lsp--origami-nested-node-beg node)
-	   (lsp--origami-nested-node-end node)
+	   (lsp-origami--nested-node-beg node)
+	   (lsp-origami--nested-node-end node)
 	   0
-	   (seq-map (-rpartial #'lsp--origami-node-to-fold create)
-		    (lsp--origami-nested-node-children node))))
+	   (seq-map (-rpartial #'lsp-origami--node-to-fold create)
+		    (lsp-origami--nested-node-children node))))
 
-(defun lsp--origami-range-sort-pred (r1 r2)
+(defun lsp-origami--range-sort-pred (r1 r2)
   (or (< (car r1) (car r2))
       (and (= (car r1) (car r2))
 	   (> (cdr r1) (cdr r2)))))
@@ -108,14 +109,14 @@
     (let* ((ranges (lsp-request "textDocument/foldingRange"
 			     `(:textDocument ,(lsp--text-document-identifier))))
 	   (ranges (seq-sort
-		    #'lsp--origami-range-sort-pred
+		    #'lsp-origami--range-sort-pred
 		    (delete-dups (seq-map lsp-origami--map-fn ranges))))
 	   nodes)
       (if (not (zerop (seq-length ranges)))
 	  (progn
-	    (setq nodes (list (lsp--origami-make-node-from-range (pop ranges))))
+	    (setq nodes (list (lsp-origami--make-node-from-range (pop ranges))))
 	    (seq-do (-rpartial #'lsp-origami--insert-range nodes) ranges)
-	    (seq-map (-rpartial #'lsp--origami-node-to-fold create) nodes))
+	    (seq-map (-rpartial #'lsp-origami--node-to-fold create) nodes))
 	nil))))
 
 (defun lsp-origami-enable ()
