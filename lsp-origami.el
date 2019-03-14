@@ -22,6 +22,12 @@
 
 ;;; Commentary
 
+;; lsp-origami provides support for origami.el using language server
+;; procotol's "textDocument/foldingRange" functionality. It can be enabled
+;; with
+;; (require 'lsp-origami)
+;; (add-hook 'origami-mode-hook #'lsp-origami-enable)
+
 ;;; Code:
 
 (require 'origami)
@@ -78,7 +84,7 @@
 		   "endCharacter" end-character))
     (cons (lsp--position-to-point (ht ("line" start-line)
 				      ("character" start-character)))
-	  (lsp--position-to-point (ht ("line" end-line)
+ 	  (lsp--position-to-point (ht ("line" end-line)
 				      ("character" end-character))))))
 
 (defun lsp--origami-node-to-fold (node create)
