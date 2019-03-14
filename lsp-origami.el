@@ -24,7 +24,7 @@
 ;;; Commentary:
 
 ;; lsp-origami provides support for origami.el using language server
-;; protocol's "textDocument/foldingRange" functionality. It can be enabled
+;; protocol's "textDocument/foldingRange" functionality.  It can be enabled
 ;; with
 ;; (require 'lsp-origami)
 ;; (add-hook 'origami-mode-hook #'lsp-origami-enable)
@@ -43,12 +43,14 @@
   (children))
 
 (defun lsp-origami--make-node-from-range (range)
+  "Create lsp-origami--nested-node from RANGE."
   (make-lsp-origami--nested-node
    :beg (car range)
    :end (cdr range)
    :children nil))
 
 (defun lsp-origami--insert-range (range nodes)
+  "Recursively insert RANGE into the list of nodes NODES."
   (-let (((beg . end) range))
     (if (null nodes)
 	nil
@@ -89,6 +91,7 @@
 				      ("character" end-character))))))
 
 (defun lsp-origami--node-to-fold (node create)
+  "Recursively create a fold from NODE using the fold creation function CREATE."
   (funcall create
 	   (lsp-origami--nested-node-beg node)
 	   (lsp-origami--nested-node-end node)
@@ -120,6 +123,7 @@
 	nil))))
 
 (defun lsp-origami-enable ()
+  "Enable code folding support for origami."
   (interactive)
   (if (lsp--capability "foldingRangeProvider")
       (setq-local origami-parser-alist `((,major-mode . lsp-origami--parser)))
