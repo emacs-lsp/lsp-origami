@@ -5,7 +5,6 @@
 ;; Author: Vibhav Pant
 ;; Keywords: languages lsp-mode
 ;; Package-Requires: ((origami "1.0") (lsp-mode "6.0") (dash "2.14.1") (dash-functional "2.14.1") (ht "2.0"))
-;; Version: 1.0
 ;; URL: https://github.com/emacs-lsp/lsp-origami
 
 ;; This program is free software; you can redistribute it and/or modify
