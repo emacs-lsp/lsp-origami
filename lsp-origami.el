@@ -51,7 +51,8 @@
 (defun lsp-origami--parser (create)
   "Get a list of Folding Ranges for the current buffer."
   (lambda (_content)
-    (unless (lsp--capability "foldingRangeProvider")
+    (unless (or (lsp--capability "foldingRangeProvider")
+                (lsp--registered-capability "textDocument/foldingRange"))
       (signal 'lsp-capability-not-supported (list "foldingRangeProvider")))
     (seq-map (lambda (range)
 	       (lsp-origami--folding-range-to-fold range create))
