@@ -2,5 +2,5 @@
   lsp-origami provides support for ~origami.el~ using language server protocol's
   ~textDocument/foldingRange~ functionality. It can be enabled with
  #+BEGIN_SRC emacs-lisp
- (add-hook 'origami-mode-hook #'lsp-origami-mode)
+ (add-hook 'lsp-after-open-hook #'lsp-origami-try-enable)
  #+END_SRC
