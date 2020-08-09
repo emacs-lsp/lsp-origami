@@ -1,11 +1,11 @@
 ;;; lsp-origami.el --- origami.el support for lsp-mode    -*- lexical-binding: t; -*-
 
-;; Copyright (C) 2019  Vibhav Pant <vibhavp@gmail.com>
+;; Copyright (C) 2019-2020  Vibhav Pant <vibhavp@gmail.com>
 
 ;; Author: Vibhav Pant
-;; Version: 0.1
+;; Version: 1.0.0
 ;; Keywords: languages lsp-mode
-;; Package-Requires: ((origami "1.0") (lsp-mode "20190326.522"))
+;; Package-Requires: ((origami "1.0") (lsp-mode "6.1"))
 ;; URL: https://github.com/emacs-lsp/lsp-origami
 
 ;; This program is free software; you can redistribute it and/or modify
@@ -48,8 +48,9 @@
                                   (lsp--folding-range-end range))))
                         (lsp--folding-range-children range)))))
 
+
 (defun lsp-origami--parser (create)
-  "Get a list of Folding Ranges for the current buffer."
+  "Get a list of Folding Ranges for the current buffer, with CREATE as the origami callback."
   (lambda (_content)
     (unless (lsp--capability "foldingRangeProvider")
       (signal 'lsp-capability-not-supported (list "foldingRangeProvider")))
