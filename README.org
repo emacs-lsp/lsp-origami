@@ -1,3 +1,5 @@
+[[https://melpa.org/#/lsp-origami][file:https://melpa.org/packages/lsp-origami-badge.svg]]
+
 * ~origami.el~ support for ~lsp-mode~
   lsp-origami provides support for ~origami.el~ using language server protocol's
   ~textDocument/foldingRange~ functionality. It can be enabled with
