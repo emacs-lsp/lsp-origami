@@ -35,7 +35,7 @@
 (require 'lsp-mode)
 
 (defun lsp-origami--folding-range-to-fold (range create)
-  "Executre CREATE callback from origami using RANGE definition."
+  "Using the components of RANGE as arguments, execute the CREATE callback."
   (funcall create
            (lsp--folding-range-beg range)
            (lsp--folding-range-end range)
