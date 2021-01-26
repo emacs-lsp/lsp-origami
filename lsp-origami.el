@@ -35,6 +35,7 @@
 (require 'lsp-mode)
 
 (defun lsp-origami--folding-range-to-fold (range create)
+  "Using the components of RANGE as arguments, execute the CREATE callback."
   (funcall create
            (lsp--folding-range-beg range)
            (lsp--folding-range-end range)
@@ -55,8 +56,8 @@
     (unless (lsp-feature? "foldingRangeProvider")
       (signal 'lsp-capability-not-supported (list "foldingRangeProvider")))
     (seq-map (lambda (range)
-	       (lsp-origami--folding-range-to-fold range create))
-	     (lsp--get-nested-folding-ranges))))
+               (lsp-origami--folding-range-to-fold range create))
+             (lsp--get-nested-folding-ranges))))
 
 ;;;###autoload
 (defun lsp-origami-try-enable ()
