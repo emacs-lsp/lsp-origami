@@ -64,7 +64,7 @@
   "Turn on `origami-mode' locally and try to enable `lsp-origami-mode'."
   (interactive)
   (origami-mode 1)
-  (cond ((lsp--capability "foldingRangeProvider")
+  (cond ((lsp-feature? "textDocument/foldingRange")
          (lsp-origami-mode 1))
         ((called-interactively-p 'any)
          (signal 'lsp-capability-not-supported (list "foldingRangeProvider")))
