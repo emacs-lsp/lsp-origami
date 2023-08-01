@@ -2,7 +2,12 @@
          "1.0.0"
          "origami.el support for lsp-mode")
 
+(website-url "https://github.com/emacs-lsp/lsp-origami")
+(keywords "languages" "lsp-mode")
+
 (package-file "lsp-origami.el")
+
+(script "test" "echo \"Error: no test specified\" && exit 1")
 
 (source "gnu")
 (source "melpa")
