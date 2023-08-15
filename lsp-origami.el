@@ -5,7 +5,7 @@
 ;; Author: Vibhav Pant
 ;; Version: 1.0.0
 ;; Keywords: languages lsp-mode
-;; Package-Requires: ((origami "1.0") (lsp-mode "6.1"))
+;; Package-Requires: ((emacs "27.1") (origami "1.0") (lsp-mode "6.1"))
 ;; URL: https://github.com/emacs-lsp/lsp-origami
 
 ;; This program is free software; you can redistribute it and/or modify
