@@ -12,7 +12,7 @@
 (source "gnu")
 (source "melpa")
 
-(depends-on "emacs" "26.1")
+(depends-on "emacs" "27.1")
 (depends-on "origami" "1.0")
 (depends-on "lsp-mode" "6.1")
 
