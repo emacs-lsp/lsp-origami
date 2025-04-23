@@ -1,3 +1,5 @@
+;; -*- mode: eask; lexical-binding: t -*-
+
 (package "lsp-origami"
          "1.0.0"
          "origami.el support for lsp-mode")
