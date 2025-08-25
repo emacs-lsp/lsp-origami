@@ -1,6 +1,7 @@
 ;;; lsp-origami.el --- origami.el support for lsp-mode    -*- lexical-binding: t; -*-
 
 ;; Copyright (C) 2019-2020  Vibhav Pant <vibhavp@gmail.com>
+;; Copyright (C) 2020-2025  emacs-lsp maintainers
 
 ;; Author: Vibhav Pant
 ;; Version: 1.0.0
