@@ -5,6 +5,7 @@ on:
     branches:
       - master
   pull_request:
+  workflow_dispatch:
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -24,15 +25,15 @@ jobs:
           - 30.2
         experimental: [false]
         include:
-          - os: ubuntu-latest
-            emacs-version: snapshot
-            experimental: true
-          - os: macos-latest
-            emacs-version: snapshot
-            experimental: true
-          - os: windows-latest
-            emacs-version: snapshot
-            experimental: true
+        - os: ubuntu-latest
+          emacs-version: snapshot
+          experimental: true
+        - os: macos-latest
+          emacs-version: snapshot
+          experimental: true
+        - os: windows-latest
+          emacs-version: snapshot
+          experimental: true
 
     steps:
     - uses: actions/checkout@v5
